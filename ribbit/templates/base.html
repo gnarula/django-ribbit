@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet/less" href="{{ STATIC_URL }}style.less">
+    <script src="{{ STATIC_URL }}less.js"></script>
+</head>
+<body>
+    <header>
+        <div class="wrapper">
+            <img src="{{ STATIC_URL }}gfx/logo.png">
+            <span>Twitter Clone</span>
+            {% block login %}
+
+            {% endblock %}
+        </div>
+    </header>
+    <div id="content">
+        <div class="wrapper">
+            {% block content %}
+
+            {% endblock %}
+        </div>
+    </div>
+    <footer>
+        <div class="wrapper">
+            Ribbit - A Twitter Clone Tutorial<img src="{{ STATIC_URL }}gfx/logo-nettuts.png">
+        </div>
+    </footer>
+</body>
+</html>

@@ -6,7 +6,10 @@ from django.conf.urls import patterns, include, url
 
 urlpatterns = patterns('',
     # Examples:
-    # url(r'^$', 'ribbit.views.home', name='home'),
+    url(r'^$', 'ribbit_app.views.index'),
+    url(r'^login$', 'ribbit_app.views.login_view'),
+    url(r'^logout$', 'ribbit_app.views.logout_view'),
+    url(r'^signup$', 'ribbit_app.views.signup'),
     # url(r'^ribbit/', include('ribbit.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:

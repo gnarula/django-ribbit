@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block login %}
+    <form action="/login" method="post">{% csrf_token %}
+        {% for field in auth_form %}
+        {{ field }}
+        {% endfor %}
+        <input type="submit" id="btnLogIn" value="Log In">
+    </form>
+{% endblock %}
+
+{% block content %}
+{% if auth_form.non_field_errors or user_form.non_field_errors %}
+<div class="flash error">
+    {{ auth_form.non_field_errors }}
+    {{ user_form.non_field_errors }}
+</div>
+{% endif %}
+<img src="{{ STATIC_URL}}gfx/frog.jpg">
+<div class="panel right">
+    <h1>New to Ribbit?</h1>
+    <p>
+        <form action="/signup" method="post">{% csrf_token %}
+            {% for field in user_form %}
+            {{ field }}
+            {% endfor %}
+            <input type="submit" value="Create Account">
+        </form>
+    </p>
+</div>
+{% endblock %}

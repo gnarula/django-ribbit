@@ -28,8 +28,28 @@ body {
 	margin: 0; padding: 0;
 }
 
+.flash {
+    padding: 10px;
+    margin: 20px 0;
+    &.error {
+        background: #ffefef;
+        color: #4c1717;
+        border: 1px solid #4c1717;
+    }
+    &.warning {
+        background: #ffe4c1;
+        color: #79420d;
+        border: 1px solid #79420d;
+    }
+    &.notice {
+        background: #efffd7;
+        color: #8ba015;
+        border: 1px solid #8ba015;
+    }
+}
+
 input {
-	width: 236px;
+	width: 189px;
 	height: 38px;
 	border: 1px solid @border-color;
 	padding: 0 10px;
@@ -38,6 +58,11 @@ input {
 	&:focus {
 		background: #FFFDF2;
 	}
+    &.error {
+        background: #ffefef;
+        color: #4c1717;
+        border: 1px solid #4c1717;
+    }
 }
 
 input[type="submit"] {
@@ -112,7 +137,7 @@ header {
 			font-size: 14px;
 			&.right {
 				width: 303px;
-				height: 313px;
+				height: 433px;
 				float: right;
 				textarea.ribbitText {
 					width: 249px;
