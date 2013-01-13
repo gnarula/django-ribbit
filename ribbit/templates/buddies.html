@@ -19,14 +19,14 @@
         </p>
     </div>
     <div class="panel left">
-        <h1>Public Ribbits</h1>
-        {% for ribbit in ribbits %}
+        <h1>Your Ribbit Profile</h1>
         <div class="ribbitWrapper">
             <img class="avatar" src="{{ STATIC_URL }}gfx/user2.png">
-            <span class="name">{{ ribbit.user.first_name }}</span>@{{ ribbit.user.username }}
-            <span class="time">{{ ribbit.creation_date|timesince }}</span>
-            <p>{{ ribbit.content }}</p>
+            <span class="name">{{ user.first_name }}</span>@{{ user.username }}
+            <p>
+                ## Ribbits<span class="spacing">## Followers</span><span class="spacing">## Following</span><br>
+                {{ ribbit.content }}
+            </p>
         </div>
-        {% endfor %}
     </div>
 {% endblock %}

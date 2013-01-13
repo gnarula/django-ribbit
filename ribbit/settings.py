@@ -10,6 +10,7 @@ ADMINS = (
 )
 
 PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))
+LOGIN_URL = '/'
 
 MANAGERS = ADMINS
 
