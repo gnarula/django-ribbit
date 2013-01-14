@@ -21,12 +21,12 @@
                 <img class="avatar" src="{{ STATIC_URL }}gfx/user2.png">
                 <span class="name">{{ user.first_name }}</span>
             </a>
+            @{{ user.username }}
             <p>
                 {{ user.ribbit_count}} Ribbits
                 <span class="spacing">{{ user.profile.followed_by.count }} Followers</span>
                 <span class="spacing">{{ user.profile.follows.count }} Following</span>
             </p>
-            @{{ user.username }}
             <p>{{ ribbit.content }}</p>
         </div>
         {% endfor %}
