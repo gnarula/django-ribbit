@@ -33,8 +33,9 @@ def index(request, auth_form=None, user_form=None):
         auth_form.fields['password'].widget.attrs['placeholder'] = "Password"
 
         for key, error in auth_form.errors.iteritems():
-            auth_form.fields[key].widget.attrs['value'] = ''.join(error)
-            auth_form.fields[key].widget.attrs['class'] = "error"
+            if key != '__all__':
+                auth_form.fields[key].widget.attrs['value'] = ''.join(error)
+                auth_form.fields[key].widget.attrs['class'] = "error"
 
         user_form.fields['username'].widget.attrs['placeholder'] = "Username"
         user_form.fields['password1'].widget.attrs['placeholder'] = "Password"
@@ -44,8 +45,9 @@ def index(request, auth_form=None, user_form=None):
         user_form.fields['last_name'].widget.attrs['placeholder'] = "Last Name"
 
         for key, error in user_form.errors.iteritems():
-            user_form.fields[key].widget.attrs['value'] = ''.join(error)
-            user_form.fields[key].widget.attrs['class'] = "error"
+            if key != '__all__':
+                user_form.fields[key].widget.attrs['value'] = ''.join(error)
+                user_form.fields[key].widget.attrs['class'] = "error"
 
         return render(request,
                       'home.html',
