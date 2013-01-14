@@ -114,7 +114,10 @@ def submit(request):
 
 
 def get_latest(user):
-    return user.ribbit_set.order_by('id').reverse()[0]
+    try:
+        return user.ribbit_set.order_by('id').reverse()[0]
+    except IndexError:
+        return ""
 
 
 @login_required
