@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
-from django.db.models import Q
+from django.db.models import Count
 from django.contrib.auth.models import User
 from django.http import Http404
 from ribbit_app.forms import UserCreateForm, RibbitForm
@@ -93,7 +93,7 @@ def public(request, ribbit_form=None):
     return render(request,
                   'public.html',
                   {'ribbit_form': ribbit_form, 'next_url': '/public',
-                   'ribbits': ribbits, })
+                   'ribbits': ribbits, 'username': request.user.username})
 
 
 @login_required
@@ -129,13 +129,18 @@ def users(request, username="", ribbit_form=None):
         if username == request.user.username or request.user.profile.follows.filter(user__username=username):
             # Self Profile
             return render(request, 'user.html', {'user': user, 'ribbits': ribbits, })
-        return render(request, 'user.html', {'user': user, 'ribbits': ribbits, 'follow': True })
-    users = User.objects.all()
+        return render(request, 'user.html', {'user': user, 'ribbits': ribbits, 'follow': True, })
+    users = User.objects.all().annotate(ribbit_count=Count('ribbit'))
     ribbits = map(get_latest, users)
-    obj = zip(users,ribbits)
+    obj = zip(users, ribbits)
     ribbit_form = ribbit_form or RibbitForm()
     ribbit_form.fields["content"].widget.attrs['class'] = "ribbitText"
-    return render(request, 'profiles.html', {'obj': obj, 'next_url': '/users/', 'ribbit_form': ribbit_form })
+    return render(request,
+                  'profiles.html',
+                  {'obj': obj, 'next_url': '/users/',
+                   'ribbit_form': ribbit_form,
+                   'username': request.user.username, })
+
 
 @login_required
 def follow(request):

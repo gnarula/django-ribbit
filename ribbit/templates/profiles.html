@@ -1,9 +1,4 @@
 {% extends "base.html" %}
-{% block login %}
-    <form action="/logout">
-        <input type="submit" id="btnLogOut" value="Log Out">
-    </form>
-{% endblock %}
 
 {% block content %}
     <div class="panel right">
@@ -26,8 +21,12 @@
                 <img class="avatar" src="{{ STATIC_URL }}gfx/user2.png">
                 <span class="name">{{ user.first_name }}</span>
             </a>
+            <p>
+                {{ user.ribbit_count}} Ribbits
+                <span class="spacing">{{ user.profile.followed_by.count }} Followers</span>
+                <span class="spacing">{{ user.profile.follows.count }} Following</span>
+            </p>
             @{{ user.username }}
-            <span class="time">{{ ribbit.creation_date|timesince }}</span>
             <p>{{ ribbit.content }}</p>
         </div>
         {% endfor %}
