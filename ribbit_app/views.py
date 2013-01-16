@@ -10,10 +10,9 @@ from ribbit_app.models import Ribbit
 
 
 def index(request, auth_form=None, user_form=None):
-    # User id logged in
+    # User is logged in
     if request.user.is_authenticated():
         ribbit_form = RibbitForm()
-        ribbit_form.fields["content"].widget.attrs['class'] = "ribbitText"
         user = request.user
         ribbits_self = Ribbit.objects.filter(user=user.id)
         ribbits_buddies = Ribbit.objects.filter(user__userprofile__in=user.profile.follows.all)
@@ -25,29 +24,9 @@ def index(request, auth_form=None, user_form=None):
                        'ribbits': ribbits,
                        'next_url': '/', })
     else:
-        # User is either not logged in or is anonymous
+        # User is not logged in
         auth_form = auth_form or AuthenticationForm()
         user_form = user_form or UserCreateForm()
-
-        auth_form.fields['username'].widget.attrs['placeholder'] = "Username"
-        auth_form.fields['password'].widget.attrs['placeholder'] = "Password"
-
-        for key, error in auth_form.errors.iteritems():
-            if key != '__all__':
-                auth_form.fields[key].widget.attrs['value'] = ''.join(error)
-                auth_form.fields[key].widget.attrs['class'] = "error"
-
-        user_form.fields['username'].widget.attrs['placeholder'] = "Username"
-        user_form.fields['password1'].widget.attrs['placeholder'] = "Password"
-        user_form.fields['password2'].widget.attrs['placeholder'] = "Password Confirmation"
-        user_form.fields['email'].widget.attrs['placeholder'] = "Email"
-        user_form.fields['first_name'].widget.attrs['placeholder'] = "First Name"
-        user_form.fields['last_name'].widget.attrs['placeholder'] = "Last Name"
-
-        for key, error in user_form.errors.iteritems():
-            if key != '__all__':
-                user_form.fields[key].widget.attrs['value'] = ''.join(error)
-                user_form.fields[key].widget.attrs['class'] = "error"
 
         return render(request,
                       'home.html',
@@ -90,7 +69,6 @@ def signup(request):
 @login_required
 def public(request, ribbit_form=None):
     ribbit_form = ribbit_form or RibbitForm()
-    ribbit_form.fields["content"].widget.attrs['class'] = "ribbitText"
     ribbits = Ribbit.objects.reverse()[:10]
     return render(request,
                   'public.html',
@@ -109,8 +87,6 @@ def submit(request):
             ribbit.save()
             return redirect(next_url)
         else:
-            ribbit_form.fields["content"].widget.attrs['class'] = "ribbitText error"
-            ribbit_form.fields["content"].widget.attrs['placeholder'] = ''.join(ribbit_form.errors['content'])
             return public(request, ribbit_form)
     return redirect('/')
 
@@ -139,7 +115,6 @@ def users(request, username="", ribbit_form=None):
     ribbits = map(get_latest, users)
     obj = zip(users, ribbits)
     ribbit_form = ribbit_form or RibbitForm()
-    ribbit_form.fields["content"].widget.attrs['class'] = "ribbitText"
     return render(request,
                   'profiles.html',
                   {'obj': obj, 'next_url': '/users/',

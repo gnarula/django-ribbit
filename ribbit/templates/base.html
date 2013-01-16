@@ -22,6 +22,21 @@
     </header>
     <div id="content">
         <div class="wrapper">
+            {% block flash %}
+            {% if auth_form.non_field_errors or user_form.non_field_errors or ribbit_form.errors %}
+            <div class="flash error">
+                {{ auth_form.non_field_errors }}
+                {{ user_form.non_field_errors }}
+                {{ ribbit_form.content.errors }}
+            </div>
+            {% endif %}
+            {% if notice %}
+            <div class="flash notice">
+                {{ notice }}
+            </div>
+            {% endif %}
+            {% endblock %}
+
             {% block content %}
 
             {% endblock %}

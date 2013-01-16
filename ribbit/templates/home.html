@@ -9,13 +9,9 @@
     </form>
 {% endblock %}
 
+
 {% block content %}
-{% if auth_form.non_field_errors or user_form.non_field_errors %}
-<div class="flash error">
-    {{ auth_form.non_field_errors }}
-    {{ user_form.non_field_errors }}
-</div>
-{% endif %}
+
 <img src="{{ STATIC_URL}}gfx/frog.jpg">
 <div class="panel right">
     <h1>New to Ribbit?</h1>
