@@ -1,11 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
-from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 from django.contrib.auth.models import User
 from django.http import Http404
-from ribbit_app.forms import UserCreateForm, RibbitForm
+from ribbit_app.forms import AuthenticateForm, UserCreateForm, RibbitForm
 from ribbit_app.models import Ribbit
 
 
@@ -25,7 +24,7 @@ def index(request, auth_form=None, user_form=None):
                        'next_url': '/', })
     else:
         # User is not logged in
-        auth_form = auth_form or AuthenticationForm()
+        auth_form = auth_form or AuthenticateForm()
         user_form = user_form or UserCreateForm()
 
         return render(request,
@@ -35,7 +34,7 @@ def index(request, auth_form=None, user_form=None):
 
 def login_view(request):
     if request.method == 'POST':
-        form = AuthenticationForm(data=request.POST)
+        form = AuthenticateForm(data=request.POST)
         if form.is_valid():
             login(request, form.get_user())
             # Success
