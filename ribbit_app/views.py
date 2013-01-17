@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 from django.contrib.auth.models import User
 from django.http import Http404
+from django.core.exceptions import ObjectDoesNotExist
 from ribbit_app.forms import AuthenticateForm, UserCreateForm, RibbitForm
 from ribbit_app.models import Ribbit
 
@@ -71,7 +72,7 @@ def public(request, ribbit_form=None):
     ribbits = Ribbit.objects.reverse()[:10]
     return render(request,
                   'public.html',
-                  {'ribbit_form': ribbit_form, 'next_url': '/public',
+                  {'ribbit_form': ribbit_form, 'next_url': '/ribbits',
                    'ribbits': ribbits, 'username': request.user.username})
 
 
